@@ -1,0 +1,2 @@
+module NozStatsHelper
+end
