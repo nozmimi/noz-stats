@@ -36,11 +36,11 @@ end
     
     # 条件指定に使う、データの更新日時の取得
     update_date = data_all[:GET_STATS_DATA][:STATISTICAL_DATA][:TABLE_INF][:UPDATED_DATE]
-
-    #条件指定に使う、データベースを取得
-    # if CategoryList.count == 0
-    #   CategoryList.create(category_code:stats_data_id, data_update_date:update_date)
-    # end
+    
+    db_catlist = CategoryList.all
+    if db_catlist.count == 4
+      db_catlist.create(category_code:stats_data_id, data_update_date:update_date)
+    end
     
       # if data_update_date > db_data[0].updated_at or db_data.count == 0
       #   data_class_obj = data_all[:GET_STATS_DATA][:STATISTICAL_DATA][:CLASS_INF][:CLASS_OBJ]
