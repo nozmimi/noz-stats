@@ -1,40 +1,37 @@
-function Testfunction(get_eleID){
-  
-var ctx = document.getElementById(get_eleID).getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ["赤", "青", "黄色", "緑", "紫", "橙"],
-        datasets: [{
-            label: '得票数',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
+function getData_StatsData(tableTitle,tableData){
+
+  //nodeにテーブル行を追加していく。
+  for(let value of map_col_item.values()){
+      let tHead = document.createElement("th");
+          tHead.appendChild(document.createTextNode(value));
+          tableTitle.appendChild(tHead);
+  }
+
+  for(let key of map_row_time.keys()){
+      let tRow = tableData.insertRow( -1 );
+          tRow.classList.add("text-right");
+
+      let tHead = document.createElement("th");
+          tHead.classList.add("text-left");
+
+      tRow.appendChild(tHead).appendChild(document.createTextNode(map_row_time.get(key)));
+  }                
+
+
+
+      },false);
+
+      xhr.addEventListener('loadend',function(){
+          show_result_xhr.textContent = "";
+      },false);
+
+      xhr.addEventListener('error',function(){
+          show_result_xhr.textContent = 'サーバーエラーが発生しました。';
+      },false);
+
+      xhr.open('GET',reqUrl_StatsData_json,true);
+      xhr.send(null);
+
+  });        
+
 }

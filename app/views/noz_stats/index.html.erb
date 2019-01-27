@@ -1,12 +1,10 @@
-<%= @req_url %>
-
 <div class="container">
 
   <div class="row mt-5">
     <div class="col-lg-4 canvas">
-        <canvas id="myChart"></canvas>
-        <script>Testfunction("myChart")</script>
-        <%= link_to "", :controller => "noz_stats", :action => "index" %>
+        <canvas id="ChartGDP"></canvas>
+        <script>barGraphfunction("ChartGDP")</script>
+        <%= link_to "", :controller => "noz_stats", :action => "table" %>
     </div>
     <div class="col-lg-4">
       One of three columns
@@ -19,7 +17,7 @@
   <div class="row mt-5">
     <div class="col-lg-4">
         <canvas id="myChart2"></canvas>
-        <script>Testfunction("myChart2")</script>
+        <script>barGraphfunction("myChart2")</script>
     </div>
     <div class="col-lg-4">
       One of three columns
@@ -31,4 +29,16 @@
 
 
 </div>
+
+<p>（仮）確認用に表示しているだけ（後で消す）</p>
+<% @db_datas.each do |cat_list| %>
+  date_code:<%= cat_list.date_code %>
+  <br>
+  date_name:<%= cat_list.date_name %>
+  <br>
+  category_code:<%= cat_list.category_code %>
+  <br>
+  category_name:<%= cat_list.category_name %>
+  <hr>
+<% end %>
 

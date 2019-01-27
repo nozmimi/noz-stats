@@ -2,6 +2,12 @@ class NozStatsController < ApplicationController
   
   def index
     get_data_gdp
+    @db_datas = SystemOfNationalAccount.all
+  end
+
+  def table
+    get_data_gdp
+    
   end
 
 end
@@ -12,7 +18,8 @@ end
     api_url = "https://api.e-stat.go.jp/rest/2.1/app/json/getStatsData"
     api_appid = "bb86c86ee575b3adfa4930ee0f17a74de14e57e6"
     stats_data_id = "0003109767"
-    @req_url = api_url +"?appId=" + api_appid +"&statsDataId=" + stats_data_id  
+    @req_url = api_url +"?appId=" + api_appid +"&statsDataId=" + stats_data_id
+    puts @req_url
   end
 
 #以下、各統計のデータを呼び出すメソッド。
@@ -34,24 +41,34 @@ end
     data_json = Net::HTTP.get(req_uri)
     data_all = JSON.parse(data_json, symbolize_names: true)
     
-    # 条件指定に使う、データの更新日時の取得
+    # データの更新日時の取得
     update_date = data_all[:GET_STATS_DATA][:STATISTICAL_DATA][:TABLE_INF][:UPDATED_DATE]
     
-    db_catlist = CategoryList.all
-    if db_catlist.count == 4
-      db_catlist.create(category_code:stats_data_id, data_update_date:update_date)
+    # date,categoryの取り出し
+    data_class_objs = data_all[:GET_STATS_DATA][:STATISTICAL_DATA][:CLASS_INF][:CLASS_OBJ]
+   
+    # date,categoryごとのデータの取り出し
+    data_datainfs = data_all[:GET_STATS_DATA][:STATISTICAL_DATA][:DATA_INF]
+
+
+    db_catlists = CategoryList.all
+    if db_catlists.count == 0
+      db_catlists.create(category_code:stats_data_id, data_update_date:update_date)
     end
     
-      # if data_update_date > db_data[0].updated_at or db_data.count == 0
-      #   data_class_obj = data_all[:GET_STATS_DATA][:STATISTICAL_DATA][:CLASS_INF][:CLASS_OBJ]
-        
-      #   data_class_obj.each do |data|
-      #     if data[:@id] == "time"
-      #       data[:CLASS].each do |data_time|
-      #           SystemOfNationalAccount.create(date_code:data_time[:@code], date_name:data_time[:@name], period_time:"年度")
-      #       end
-      #     end
-      #   end      
-      # else
-      # end
+    db_sna = SystemOfNationalAccount.all
+    if db_sna.count > 0
+      data_class_objs.each do |obj|
+        case obj[:@id] 
+        when "time" then
+          db_sna.create date_code:obj[:CLASS][:@code], date_name:obj[:CLASS][:@name], period_time:"年度"
+        when "cat01"
+          db_sna.create category_code:obj[:CLASS][:@code], category_name:obj[:CLASS][:@name]
+        end
+      end
+    else
+    
+      
+    end
+      
     end
