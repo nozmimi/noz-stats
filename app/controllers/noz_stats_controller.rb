@@ -2,7 +2,7 @@ class NozStatsController < ApplicationController
   
   def index
     get_data_gdp
-    @db_datas = SystemOfNationalAccount.all
+    
   end
 
   def table
@@ -45,7 +45,7 @@ end
     update_date = data_all[:GET_STATS_DATA][:STATISTICAL_DATA][:TABLE_INF][:UPDATED_DATE]
     
     # date,categoryの取り出し
-    data_class_objs = data_all[:GET_STATS_DATA][:STATISTICAL_DATA][:CLASS_INF][:CLASS_OBJ]
+    data_classobjs = data_all[:GET_STATS_DATA][:STATISTICAL_DATA][:CLASS_INF][:CLASS_OBJ]
    
     # date,categoryごとのデータの取り出し
     data_datainfs = data_all[:GET_STATS_DATA][:STATISTICAL_DATA][:DATA_INF]
@@ -58,12 +58,15 @@ end
     
     db_sna = SystemOfNationalAccount.all
     if db_sna.count > 0
-      data_class_objs.each do |obj|
+      data_classobjs.each do |obj|
         case obj[:@id] 
         when "time" then
-          db_sna.create date_code:obj[:CLASS][:@code], date_name:obj[:CLASS][:@name], period_time:"年度"
-        when "cat01"
-          db_sna.create category_code:obj[:CLASS][:@code], category_name:obj[:CLASS][:@name]
+          classobjs_time_class = obj[:CLASS]
+          puts classobjs_time_class
+          # db_sna.create date_code:obj[:CLASS][:@code], date_name:obj[:CLASS][:@name], period_time:"年度"
+        when "cat01" then
+          classobjs_cat_class = obj[:CLASS]
+          # db_sna.create category_code:obj[:CLASS][:@code], category_name:obj[:CLASS][:@name]
         end
       end
     else
