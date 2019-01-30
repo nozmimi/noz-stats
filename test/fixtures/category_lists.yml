@@ -3,9 +3,9 @@
 one:
   category_code: MyString
   category_name: MyString
-  category_date: 2019-01-26 15:08:33
+  category_update_date: MyString
 
 two:
   category_code: MyString
   category_name: MyString
-  category_date: 2019-01-26 15:08:33
+  category_update_date: MyString
