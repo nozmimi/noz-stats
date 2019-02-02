@@ -80,6 +80,7 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
   database: noz_stats_production
   username: noz_stats
   password: <%= ENV['NOZ_STATS_DATABASE_PASSWORD'] %>
