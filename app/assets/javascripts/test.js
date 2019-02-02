@@ -10,7 +10,7 @@ function getData_StatsData(db_data,tableTitle,tableData){
       switch(data[i]["category_code"]){
 
       case colName[j]:
-        let tHead = document.createElement("th");
+        var tHead = document.createElement("th");
              tHead.appendChild(document.createTextNode(data[i]["category_name"]));
              tableTitle.appendChild(tHead);
       }
@@ -18,10 +18,10 @@ function getData_StatsData(db_data,tableTitle,tableData){
   }
 
   for(i=0; i<data.length; i++){
-    let tRow = tableData.insertRow( -1 );
+    var tRow = tableData.insertRow( -1 );
         tRow.classList.add("text-right");
 
-    let tHead = document.createElement("th");
+    var tHead = document.createElement("th");
         tHead.classList.add("text-left");
 
     tRow.appendChild(tHead).appendChild(document.createTextNode(data[i]["date_name"]));
